@@ -17,19 +17,30 @@ public class Main {
             for (int r = 0; r < col; r++) {
                 map[r] = reader.readLine().toCharArray();
             }
-
-            for (int i = 0; i < col; i++) {
-                for (int j = 0; j < linha; j++) {
+            int loop = 0;
+            for (int i = 0; i < col - 1; i++) {
+                for (int j = 0; j < linha - 1; j++) {
                     System.out.print(map[i][j]);
                     if (map[i][j] == '*') {
                         continue;
                     }
-                    graph.addEdge(i * col + j, i * col + j + 1);
-                    graph.addEdge(i * col + j, (i + 1) * col + j);
+                    if (map[i][j] == "*") {
+                        graph.addEdge();
+                        loop++;
+                    }
+                    if (Character.isDigit(map[i][j])) {
+                        graph.addEdge(map[i][j] - 0, map[i][j + 1]);
+                        graph.addEdge(map[i][j] - 0, map[i + 1][j]);
+                        continue;
+
+                    }
+                    graph.addEdge(map[i][j], map[i][j + 1]);
+                    graph.addEdge(map[i][j], map[i + 1][j]);
                 }
                 System.out.println("");
             }
-
+            CaminhamentoLargura caminhamentoLargura = new CaminhamentoLargura(graph, 1);
+            System.out.println(caminhamentoLargura.pathTo(9));
             reader.close();
         } catch (
 
